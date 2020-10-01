@@ -1,4 +1,5 @@
 # KataSG
+[![Build Status](https://travis-ci.org/ErwanLT/KataSG.svg?branch=master)](https://travis-ci.org/ErwanLT/KataSG)
 [![codecov](https://codecov.io/gh/ErwanLT/KataSG/branch/master/graph/badge.svg?token=UWGTO8C0S9)](undefined)
 
 - h2-console : http://localhost:8080/h2-console

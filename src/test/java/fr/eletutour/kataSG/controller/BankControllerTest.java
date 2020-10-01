@@ -1,6 +1,7 @@
 package fr.eletutour.kataSG.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import fr.eletutour.kataSG.dto.BankAccountDTO;
 import fr.eletutour.kataSG.exceptions.BankAccountNotFoundException;
 import fr.eletutour.kataSG.exceptions.NegativeBalanceException;
@@ -15,7 +16,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.BDDMockito.given;
@@ -50,10 +53,16 @@ public class BankControllerTest {
     public void shouldCreateAccount() throws Exception {
         given(this.bankService.createAccount(any())).willReturn(bankAccountDTO);
 
-        this.mockMvc.perform(post("/bank")
+        MvcResult result = this.mockMvc.perform(post("/bank")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(asJsonString(bankAccountDTO)))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String content = result.getResponse().getContentAsString();
+        Gson gson = new Gson();
+        BankAccountDTO accountDTO = gson.fromJson(content, BankAccountDTO.class);
+        assertThat(accountDTO).isNotNull();
     }
 
     @Test
@@ -82,6 +91,16 @@ public class BankControllerTest {
 
         this.mockMvc.perform(get("/bank/withdraw?idAccount=9999&amount=150"))
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void shouldReturn_notFound_whenGettingAccountOperations() throws Exception {
+
+        when(this.bankAccountRepository.findOneById(anyInt())).thenReturn(null);
+        when(this.bankService.getAccountOperation(anyInt())).thenThrow(new BankAccountNotFoundException(""));
+
+        this.mockMvc.perform(get("/bank/operations?idAccount=9999"))
+                .andExpect(status().isNotFound());
     }
 
     public static String asJsonString(final Object obj) {

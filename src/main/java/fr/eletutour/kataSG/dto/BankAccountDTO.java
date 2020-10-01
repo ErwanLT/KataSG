@@ -27,7 +27,7 @@ public class BankAccountDTO {
     private String name;
 
     @ApiModelProperty(name = "amount", required = true, dataType = "int", example = "1000", position = 1)
-    private int Amount;
+    private int amount;
 
     private List<OperationDto> operationsDTO;
 

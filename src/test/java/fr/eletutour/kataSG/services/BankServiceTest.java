@@ -1,8 +1,11 @@
 package fr.eletutour.kataSG.services;
 
+import fr.eletutour.kataSG.dto.OperationDto;
+import fr.eletutour.kataSG.enums.TypeOperation;
 import fr.eletutour.kataSG.exceptions.BankAccountNotFoundException;
 import fr.eletutour.kataSG.exceptions.NegativeBalanceException;
 import fr.eletutour.kataSG.model.BankAccount;
+import fr.eletutour.kataSG.model.Operation;
 import fr.eletutour.kataSG.repository.BankAccountRepository;
 import fr.eletutour.kataSG.services.impl.BankService;
 import org.junit.Before;
@@ -11,6 +14,10 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 
@@ -48,6 +55,29 @@ public class BankServiceTest {
         when(bankAccountRepository.findOneById(anyInt())).thenReturn(initBankAccount());
 
         this.bankService.withdraw(1, 100);
+    }
+
+    @Test
+    public void shouldReturnListOfOperation(){
+        when(bankAccountRepository.findOneById(anyInt())).thenReturn(initBankAccountWithOperations());
+
+        List<OperationDto> operationDtos= this.bankService.getAccountOperation(1);
+        assertThat(operationDtos).isNotNull().isNotEmpty().hasSize(3);
+    }
+
+    private BankAccount initBankAccountWithOperations() {
+        BankAccount bankAccount = initBankAccount();
+        List<Operation> operations = new ArrayList<>();
+        for (int i = 0; i<3; i++){
+            Operation operation = new Operation();
+            operation.setIdOperation(i);
+            operation.setBankAccount(bankAccount);
+            operation.setTypeOperation(TypeOperation.DEPOSIT);
+            operation.setAmount(100);
+            operations.add(operation);
+        }
+        bankAccount.setOperations(operations);
+        return bankAccount;
     }
 
     private BankAccount initBankAccount() {

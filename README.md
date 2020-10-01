@@ -1,4 +1,5 @@
 # KataSG
+[![codecov](https://codecov.io/gh/ErwanLT/KataSG/branch/master/graph/badge.svg?token=UWGTO8C0S9)](undefined)
 
 - h2-console : http://localhost:8080/h2-console
 - swagger-ui : http://localhost:8080/swagger-ui.html

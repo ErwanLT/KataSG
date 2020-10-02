@@ -34,8 +34,8 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo(){
         return new ApiInfo(
-                "EWeather API",
-                "Some custom description of API.",
+                "KataSG API",
+                "API for controle of a bank account",
                 "1.0.O",
                 "",
                 new Contact("Erwan Le Tutour", "https://github.com/ErwanLT", "erwanletutour.elt@gmail.com"),

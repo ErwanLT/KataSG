@@ -1,4 +1,4 @@
-package fr.eletutour.kataSG.enums;
+package fr.eletutour.kataSG.domain;
 
 /**
  * TypeOperation enum

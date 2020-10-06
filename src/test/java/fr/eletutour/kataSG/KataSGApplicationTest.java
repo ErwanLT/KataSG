@@ -1,6 +1,6 @@
 package fr.eletutour.kataSG;
 
-import fr.eletutour.kataSG.controller.BankController;
+import fr.eletutour.kataSG.rest.controller.BankController;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

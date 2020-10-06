@@ -1,17 +1,20 @@
 package fr.eletutour.kataSG.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.Instant;
 import java.util.Objects;
-import java.util.UUID;
 
 @Getter
 @Entity
 @Table
+@NoArgsConstructor
+@AllArgsConstructor
 public class Operation {
     @Id
     @GeneratedValue(generator = "UUID")
@@ -26,7 +29,7 @@ public class Operation {
             }
     )
     @Column(name = "id", updatable = false, nullable = false)
-    private UUID id;
+    private String id;
 
     @JoinColumn(name = "idBankAccount")
     @JsonBackReference

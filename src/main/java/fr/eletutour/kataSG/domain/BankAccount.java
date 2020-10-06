@@ -12,7 +12,6 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 
 @Getter
 @NoArgsConstructor
@@ -34,7 +33,7 @@ public class BankAccount {
             }
     )
     @Column(name = "id", updatable = false, nullable = false)
-    private UUID id;
+    private String id;
 
     @Column(nullable = false)
     private Instant createdOn;
@@ -75,6 +74,11 @@ public class BankAccount {
         }
         Operation operation = new Operation(createdOn, typeOperation, amount, this);
         operations.add(operation);
+        if (typeOperation.equals(TypeOperation.WHITHDRAWAL)){
+            setAmount(this.amount - amount);
+        } else {
+            setAmount(this.amount + amount);
+        }
         return operation;
     }
 }

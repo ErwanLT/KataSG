@@ -1,95 +1,61 @@
 # KataSG
-[![Build Status](https://travis-ci.org/ErwanLT/KataSG.svg?branch=master)](https://travis-ci.org/ErwanLT/KataSG)
-[![codecov](https://codecov.io/gh/ErwanLT/KataSG/branch/master/graph/badge.svg?token=UWGTO8C0S9)](undefined)
+[![Build Status](https://travis-ci.org/ErwanLT/KataSG.svg?branch=v2)](https://travis-ci.org/ErwanLT/KataSG)
+[![codecov](https://codecov.io/gh/ErwanLT/KataSG/branch/v2/graph/badge.svg?token=UWGTO8C0S9)](undefined)
 
 - h2-console : http://localhost:8080/h2-console
-- swagger-ui : http://localhost:8080/swagger-ui.html
 
 ## User Story
 ### Create account
 
 - methode : POST
-- URL : /bank
-- body :
-```json
-{  
-  "name": "some name",
-  "amount": 1000
-} 
-```
+- URL : /bank/createAccount?name&amount
+- exemple : /bank/createAccount?name=Erwan&amount=100
 - response :
 ```json
 {
-    "id": 1,
-    "name": "some name",
-    "operationsDTO": [],
-    "amount": 1000
-}
-```
-
-### Withdrawal
-- methode : GET
-- URL : /bank/withdraw
-- params : idAccount / amount
-- example : /bank/withdraw?idAccount=1&amount=150
-- response :
-```json
-{
-    "id": 1,
-    "name": "some name",
-    "operationsDTO": [
-        {
-            "idOperation": 2,
-            "dateOperation": "2020-10-01T08:28:25.613+0000",
-            "typeOperation": "WHITHDRAWAL",
-            "amount": 150
-        }
-    ],
-    "amount": 850
-}
-```
-
-### Deposit
-- methode : GET
-- URL : /bank/deposit
-- params : idAccount / amount
-- example : /bank/deposit?idAccount=1&amount=150
-- response :
-```json
-{
-    "id": 1,
-    "name": "some name",
-    "operationsDTO": [
-        {
-            "idOperation": 2,
-            "dateOperation": "2020-10-01T08:28:25.613+0000",
-            "typeOperation": "DEPOSIT",
-            "amount": 150
-        }
-    ],
-    "amount": 1150
+    "id": "c0a80116-7501-1e61-8175-01eeea630000",
+    "createdOn": "2020-10-07T07:20:36.180Z",
+    "name": "Erwan",
+    "amount": 100,
+    "operations": []
 }
 ```
 
 ### Check opération
 - methode : GET
-- URL : /bank/operations
-- params : idAccount
-- example : /bank/operations?idAccount=1
-- response :
+- URL : /bank/operations/{idAccount}
+- example : /bank/operations/c0a80116-7501-1e61-8175-01eeea630000
+- response : 
 ```json
 [
     {
-        "idOperation": 2,
-        "dateOperation": "2020-10-01T08:27:54.607+0000",
-        "typeOperation": "DEPOSIT",
-        "amount": 200
+        "id": "c0a80116-7501-1e61-8175-01efdf3f0001",
+        "createdOn": "2020-10-07T07:21:11.865Z",
+        "typeOperation": "WHITHDRAWAL",
+        "amount": 50
     },
     {
-        "idOperation": 3,
-        "dateOperation": "2020-10-01T08:27:57.273+0000",
+        "id": "c0a80116-7501-1e61-8175-01f0d4fa0002",
+        "createdOn": "2020-10-07T07:22:00.695Z",
+        "typeOperation": "WHITHDRAWAL",
+        "amount": 50
+    },
+    {
+        "id": "c0a80116-7501-1e61-8175-01f131ae0003",
+        "createdOn": "2020-10-07T07:22:59.276Z",
         "typeOperation": "DEPOSIT",
-        "amount": 200
+        "amount": 50
     }
 ]
 ```
+
+### Making operation
+- methode : GET
+- URL : /bank/make/{typeOperation}/account/{idAccount}?amount
+- example : /bank/make/DEPOSIT/account/c0a80116-7501-1e61-8175-01eeea630000?amount=50
+- possible type operation :
+  * DEPOSIT
+  * WHITHDRAWAL
+- response :
+  * 200 OK
+  * 500 An Error occured

@@ -1,17 +1,30 @@
 package fr.eletutour.kataSG.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
 import java.util.Date;
 
-@Getter
-@AllArgsConstructor
 public class Operation {
 
     private Date createdOn;
 
     private TypeOperation typeOperation;
 
-    private int amount;
+    private Money amount;
+
+    public Operation(Date date, TypeOperation typeOperation, Money amount) {
+        this.createdOn = date;
+        this.typeOperation = typeOperation;
+        this.amount = amount;
+    }
+
+    public Date getCreatedOn() {
+        return createdOn;
+    }
+
+    public TypeOperation getTypeOperation() {
+        return typeOperation;
+    }
+
+    public Money getAmount() {
+        return amount;
+    }
 }

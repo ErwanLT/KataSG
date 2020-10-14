@@ -1,4 +1,4 @@
-package fr.eletutour.kataSG.integration.stepsDef;
+package fr.eletutour.kataSG.acceptance.stepsDef;
 
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;

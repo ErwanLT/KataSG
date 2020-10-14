@@ -1,4 +1,4 @@
-package fr.eletutour.kataSG.integration.configuration;
+package fr.eletutour.kataSG.acceptance.configuration;
 
 import cucumber.api.CucumberOptions;
 import cucumber.api.junit.Cucumber;
